@@ -1,5 +1,5 @@
 //
-//  CurrentLocationVC.swift
+//  LocationMapVC.swift
 //  Dawerha
 //
 //  Created by mona aleid on 12/05/1443 AH.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CurrentLocationVC: UIViewController {
+class LocationMapVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
