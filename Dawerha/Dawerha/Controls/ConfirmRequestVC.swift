@@ -1,13 +1,13 @@
 //
-//  InfoVCViewController.swift
+//  ConfirmRequestVC.swift
 //  Dawerha
 //
-//  Created by mona aleid on 22/05/1443 AH.
+//  Created by mona aleid on 27/05/1443 AH.
 //
 
 import UIKit
 
-class InfoVCViewController: UIViewController {
+class ConfirmRequestVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
