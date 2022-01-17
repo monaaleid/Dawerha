@@ -1,0 +1,153 @@
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "01q-3z-fz1"; */
+"01q-3z-fz1.placeholder" = "Email";
+
+/* Class = "UIButton"; configuration.title = "  Go To Request Pick-Up"; ObjectID = "0Y0-KZ-QIL"; */
+"0Y0-KZ-QIL.configuration.title" = "  Go To Request Pick-Up";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0Y0-KZ-QIL"; */
+"0Y0-KZ-QIL.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "New Email"; ObjectID = "3wO-Ko-IFs"; */
+"3wO-Ko-IFs.placeholder" = "New Email";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "6Hx-Hu-KV3"; */
+"6Hx-Hu-KV3.placeholder" = "Password";
+
+/* Class = "UIButton"; configuration.title = "Sign Up"; ObjectID = "6P9-0L-ryR"; */
+"6P9-0L-ryR.configuration.title" = "Sign Up";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "6P9-0L-ryR"; */
+"6P9-0L-ryR.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Don't Have Account ? Sign Up"; ObjectID = "9Hf-hD-Akb"; */
+"9Hf-hD-Akb.configuration.title" = "Don't Have Account ? Sign Up";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "9Hf-hD-Akb"; */
+"9Hf-hD-Akb.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "  Pick-Up Schedules"; ObjectID = "HXI-xg-n2l"; */
+"HXI-xg-n2l.configuration.title" = "  Pick-Up Schedules";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "HXI-xg-n2l"; */
+"HXI-xg-n2l.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "JAz-UX-rte"; */
+"JAz-UX-rte.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Detect Location"; ObjectID = "Jyc-aC-ylU"; */
+"Jyc-aC-ylU.configuration.title" = "Detect Location";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Jyc-aC-ylU"; */
+"Jyc-aC-ylU.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Ltl-fe-jcF"; */
+"Ltl-fe-jcF.text" = "Label";
+
+/* Class = "UILabel"; text = "Arabic Language"; ObjectID = "M5q-Of-LV4"; */
+"M5q-Of-LV4.text" = "Arabic Language";
+
+/* Class = "UITableViewSection"; headerTitle = "Location :"; ObjectID = "Ndi-PT-XCY"; */
+"Ndi-PT-XCY.headerTitle" = "Location :";
+
+/* Class = "UIButton"; configuration.title = "Choose Waste Type"; ObjectID = "Pcl-RQ-nQm"; */
+"Pcl-RQ-nQm.configuration.title" = "Choose Waste Type";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Pcl-RQ-nQm"; */
+"Pcl-RQ-nQm.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "                  Profile"; ObjectID = "QNC-Uw-82P"; */
+"QNC-Uw-82P.title" = "                  Profile";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Qmr-WN-9E9"; */
+"Qmr-WN-9E9.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "RZC-GY-kDp"; */
+"RZC-GY-kDp.text" = "Name";
+
+/* Class = "UILabel"; text = "Latitude"; ObjectID = "SQb-J9-Yzc"; */
+"SQb-J9-Yzc.text" = "Latitude";
+
+/* Class = "UILabel"; text = "Longitude"; ObjectID = "Ti3-I2-QCa"; */
+"Ti3-I2-QCa.text" = "Longitude";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "YR8-45-Vqv"; */
+"YR8-45-Vqv.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "phone Number"; ObjectID = "bck-jX-pZn"; */
+"bck-jX-pZn.placeholder" = "phone Number";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "cdC-Ug-tRS"; */
+"cdC-Ug-tRS.normalTitle" = "Button";
+
+/* Class = "UINavigationItem"; title = "        Sorting Items Guide"; ObjectID = "fwX-PC-bDa"; */
+"fwX-PC-bDa.title" = "        Sorting Items Guide";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "h2O-sB-m2P"; */
+"h2O-sB-m2P.text" = "Title";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "kME-eo-ceF"; */
+"kME-eo-ceF.text" = "Address";
+
+/* Class = "UINavigationItem"; title = "      Reqest Pickup Service"; ObjectID = "lrk-Hm-Ecr"; */
+"lrk-Hm-Ecr.title" = "      Reqest Pickup Service";
+
+/* Class = "UITextField"; placeholder = "Note "; ObjectID = "mag-yf-vEQ"; */
+"mag-yf-vEQ.placeholder" = "Note ";
+
+/* Class = "UINavigationController"; title = "First"; ObjectID = "mdc-VV-58s"; */
+"mdc-VV-58s.title" = "First";
+
+/* Class = "UIButton"; configuration.title = "Logout"; ObjectID = "n0T-q2-kaw"; */
+"n0T-q2-kaw.configuration.title" = "Logout";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "n0T-q2-kaw"; */
+"n0T-q2-kaw.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "Full Name"; ObjectID = "nAo-J2-Yxy"; */
+"nAo-J2-Yxy.placeholder" = "Full Name";
+
+/* Class = "UINavigationController"; title = "Sorting Items Guide"; ObjectID = "nCR-dH-lBR"; */
+"nCR-dH-lBR.title" = "Sorting Items Guide";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "nYb-vt-8Nj"; */
+"nYb-vt-8Nj.text" = "Label";
+
+/* Class = "UILabel"; text = "Dark Mode"; ObjectID = "nmg-eM-wvx"; */
+"nmg-eM-wvx.text" = "Dark Mode";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "pZh-oK-CwN"; */
+"pZh-oK-CwN.text" = "Detail";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "scY-av-uI5"; */
+"scY-av-uI5.placeholder" = "Email";
+
+/* Class = "UITextField"; placeholder = "Mobile Number"; ObjectID = "sqd-ao-o6R"; */
+"sqd-ao-o6R.placeholder" = "Mobile Number";
+
+/* Class = "UIButton"; configuration.title = "Pick-Up  Schedule"; ObjectID = "vWc-HN-Yga"; */
+"vWc-HN-Yga.configuration.title" = "Pick-Up  Schedule";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "vWc-HN-Yga"; */
+"vWc-HN-Yga.normalTitle" = "Button";
+
+/* Class = "UITableViewSection"; headerTitle = "INFO"; ObjectID = "vj2-8S-3hF"; */
+"vj2-8S-3hF.headerTitle" = "INFO";
+
+/* Class = "UITextField"; placeholder = "Choose waste type"; ObjectID = "xVj-EU-TSq"; */
+"xVj-EU-TSq.placeholder" = "Choose waste type";
+
+/* Class = "UIButton"; configuration.title = "Confirm Request"; ObjectID = "xmt-Zd-XzH"; */
+"xmt-Zd-XzH.configuration.title" = "Confirm Request";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "xmt-Zd-XzH"; */
+"xmt-Zd-XzH.normalTitle" = "Button";
+
+/* Class = "UITableViewSection"; headerTitle = "Settings :"; ObjectID = "zeg-v0-bxT"; */
+"zeg-v0-bxT.headerTitle" = "Settings :";
+
+/* Class = "UIButton"; configuration.title = "Sign In"; ObjectID = "zut-1I-tR5"; */
+"zut-1I-tR5.configuration.title" = "Sign In";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "zut-1I-tR5"; */
+"zut-1I-tR5.normalTitle" = "Button";
