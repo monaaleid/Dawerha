@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestore
+
+
+struct UserRequest {
+    
+    var typeWaste : String?
+    var pickupDate : String?
+    var note : String?
+}

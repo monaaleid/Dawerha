@@ -10,17 +10,13 @@ import FirebaseAuth
 import Firebase
 
 class HomeViewController: UIViewController{
-
-   
+    
     @IBOutlet weak var imgHomeMain: UIImageView!
     
     @IBOutlet weak var lblMainTf: UILabel!
     
-  
-   
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     @IBAction func btnSchedules(_ sender: Any) {

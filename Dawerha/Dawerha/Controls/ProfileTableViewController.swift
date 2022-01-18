@@ -6,81 +6,185 @@
 //
 
 import UIKit
+import CoreLocation
+import FirebaseFirestore
+import FirebaseAuth
+import Firebase
 
-class ProfileVC: UITableViewController {
-
+class ProfileTableViewController: UITableViewController, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @IBOutlet weak var imgProfile: UIImageView!
+    @IBOutlet weak var nameProfile: UILabel!
+    @IBOutlet weak var profileBGView: UIView!
+    @IBOutlet weak var emailProfile: UITextField!
+    @IBOutlet weak var mobileProfile: UITextField!
+    
+    @IBOutlet weak var longitudeLabel: UILabel!
+    @IBOutlet weak var latitudeLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    
+    
+    @IBOutlet weak var darkLightLbl: UILabel!
+    @IBOutlet weak var switchLanguageLbl: UIView!
+    
+    var locationManger : CLLocationManager!
+    var handler : AuthStateDidChangeListenerHandle?
+    let database = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        locationManger = CLLocationManager()
+        locationManger.delegate = self
+        
+        UserApi.getUser(uid: Auth.auth().currentUser?.uid ?? "") { user in
+            self.nameProfile.text = user.name
+            self.emailProfile.text = user.email
+            self.mobileProfile.text = user.phone
+            self.addressLabel.text = user.address
+        }
         
     }
-
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
     // MARK: - Table view data source
-
+    
+    //     for change the profile picture localy
+    @IBAction func changePhotoBtn(_ sender: Any) {
+        let myPickerController = UIImagePickerController()
+        myPickerController.delegate = self
+        myPickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
+        self.present(myPickerController, animated: true, completion: nil)
+        
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
+    {
+        imgProfile.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //     to give the current location of the user
+    @IBAction func detectLocationBtnClick(_ sender: Any) {
+        if   Auth.auth().currentUser?.uid != nil {
+            
+            locationManger.desiredAccuracy = kCLLocationAccuracyBest
+            locationManger.requestAlwaysAuthorization()
+            if CLLocationManager.locationServicesEnabled(){
+                print("Location Enabled")
+                locationManger.startUpdatingLocation()
+            } else {
+                print("Location not Enabled")
+            }
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("didUpdateLocations")
+        let userLocation = locations[0] as CLLocation
+        let latitude = userLocation.coordinate.latitude
+        let longitude = userLocation.coordinate.longitude
+        latitudeLabel.text = "Latitude: \(latitude)"
+        longitudeLabel.text = "Longitude: \(longitude)"
+        let geocorder = CLGeocoder()
+        geocorder.reverseGeocodeLocation(userLocation){ (placemarks, error) in
+            if (error != nil){
+                print("Error in reverseGeocodeLocation")
+            }
+            let placemarks = placemarks! as [CLPlacemark]
+            if (placemarks.count>0){
+                let placemarks = placemarks[0]
+                let locality = placemarks.locality ?? ""
+                let administrativeArea = placemarks.administrativeArea ?? ""
+                let country = placemarks.country ?? ""
+                
+                self.addressLabel.text = "address: \(locality), \(administrativeArea), \(country),"
+            }
+        }
+    }
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 4
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+    // changeing to the dark mode by the app delegate
+    @IBAction func darkMode(_ sender: Any) {
+        if #available(iOS 15.0,*){
+            let appDelegate = UIApplication.shared.windows.first
+            if (sender as AnyObject).isOn {
+                appDelegate?.overrideUserInterfaceStyle = .dark
+                return
+            }
+            appDelegate?.overrideUserInterfaceStyle = .light
+            return
+        }
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    //     changeing the language by sending the user to the phone settings
+    @IBAction func language(_ sender: Any) {
+        let alert = UIAlertController(title: "You can change your language by going to your device settings.".localaized, message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok".localaized, style: .default, handler: nil))
+        let settings = UIAlertAction(title: "See Settings".localaized, style: .default, handler: { (action) -> Void in
+            UIApplication.shared.open(URL(string: "App-Prefs:root=GENERAL")!, options: [:], completionHandler: nil)
+        })
+        alert.addAction(settings)
+        self.present(alert, animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        handler = Auth.auth().addStateDidChangeListener({ (Auth, user) in
+            
+            if (user == nil )
+            {
+                print("Signed Out")
+            }else{
+                print("Signed in")
+            }
+        })
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        Auth.auth().removeStateDidChangeListener(handler!)
+        loadUserDetails()
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    func loadUserDetails() {
+        guard let userID = Auth.auth().currentUser?.uid else{
+            print("Please Login First")
+            return
+        }
+        database.collection("Users").document(userID)
+        
+        let refDoc = database.collection("Users").document(userID)
+        refDoc.getDocument{ (document, err) in
+            if (document?.data() != nil){
+            } else
+            {
+                print("User info loaded")
+            }
+        }
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    func saveUserDetails(){
     }
-    */
+    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func signOutBtn(_ sender: UIBarButtonItem) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            
+        }
+        let alert = UIAlertController(title: "Do You Want To Sign Out?".localaized, message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes".localaized, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        navigationController?.popToRootViewController(animated: true)
     }
-    */
-
+    
 }
+
+

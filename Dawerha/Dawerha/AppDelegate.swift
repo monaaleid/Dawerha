@@ -12,9 +12,22 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
+    var window : UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        
+        if let user = Auth.auth().currentUser
+        {
+            print("email = \(String(describing: user.email))")
+        }
+        
+        let database = Firestore.firestore()
+        print(database)
+        
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        
         return true
     }
 

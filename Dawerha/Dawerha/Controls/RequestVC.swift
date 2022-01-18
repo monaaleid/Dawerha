@@ -6,109 +6,99 @@
 //
 
 import UIKit
-import CoreLocation
+import FirebaseFirestore
+import FirebaseAuth
+import Firebase
 
 
-class RequestVC: UIViewController, CLLocationManagerDelegate {
-
+class RequestVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    @IBOutlet weak var pickerViewTypes: UIPickerView!
     @IBOutlet weak var types: UIButton!
+    @IBOutlet weak var typeWaste: UITextField!
+    @IBOutlet weak var pickupDate: UITextField!
+    @IBOutlet weak var note: UITextField!
     
-    @IBOutlet var outletWasteTypes: [UIButton]!
+    let database = Firestore.firestore()
+    let userRequest : UserRequest? = nil
+    var arrWasteTypes = ["Food".localaized, "Plastics".localaized, "Paper and Books".localaized, "Clothes".localaized]
     
-    @IBOutlet weak var textFieldDate: UITextField!
     
-    @IBOutlet weak var latitudeLabel: UILabel!
+    var documentID : String?
+    var dictionary: [String: Any] {
+        return ["typeWaste": typeWaste.text!, "pickupDate": pickupDate.text!, "note": note.text!, "uid": Auth.auth().currentUser?.uid ?? ""]
+    }
     
-    @IBOutlet weak var longitudeLabel: UILabel!
-    @IBOutlet weak var AdressLabel: UILabel!
-     
-    @IBOutlet weak var noteLbl: UILabel!
-    var locationManger: CLLocationManager!
+    //         using the picker Date to determine the waste type
     
-    @IBOutlet weak var textNote: UITextField!
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return arrWasteTypes.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return arrWasteTypes[row]
+    }
+    func pickerView(_pickerView:UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: arrWasteTypes[row], attributes:[NSAttributedString.Key.foregroundColor: UIColor.systemBrown])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        typeWaste.text = arrWasteTypes[row]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-  let date = Date()
-  let fromatter = DateFormatter()
-        fromatter.dateFormat = "dd/MM/yyyy"
-        textFieldDate.text = fromatter.string(from: date)
-        textFieldDate.textColor = .black
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
-        datePicker.frame.size = CGSize(width: 0, height: 250)
-        textFieldDate.inputView = datePicker
+        pickerViewTypes.delegate = self
+        pickerViewTypes.dataSource = self
+        typeWaste.text = arrWasteTypes[pickerViewTypes.selectedRow(inComponent: 0)]
         
-        
-        types.layer.cornerRadius = types.frame.height / 2
-        outletWasteTypes.forEach{ (btn) in
-            btn.layer.cornerRadius = btn.frame.height / 2
-            btn.isHidden = true
-            btn.alpha = 0
-            
-       }
-        
-        locationManger = CLLocationManager()
-            locationManger.delegate = self
-    }
-    
-    @IBAction func detectLocationBtnClick(_ sender: Any) {
-        locationManger.desiredAccuracy = kCLLocationAccuracyBest
-        locationManger.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled(){
-            print("Location Enabled")
-            locationManger.startUpdatingLocation()
-        } else {
-            print("Location not Enabled")
-        }
-    }
-    private func locationManager(_manger: CLLocationManager, didUpdateLocations locations:[CLLocation]){
-        let userLocation = locations[0] as CLLocation
-        let latitude = userLocation.coordinate.latitude
-        let longitude = userLocation.coordinate.longitude
-        latitudeLabel.text = "Latitude: \(latitude)"
-        longitudeLabel.text = "Longitude: \(longitude)"
-        let geocorder = CLGeocoder()
-        geocorder.reverseGeocodeLocation(userLocation){ (placemarks, error) in
-            if (error != nil){
-                print("Error in reverseGeocodeLocation")
-            }
-            let placemarks = placemarks! as [CLPlacemark]
-            if (placemarks.count>0){
-                let placemarks = placemarks[0]
-                let locality = placemarks.locality ?? ""
-                let administrativeArea = placemarks.administrativeArea ?? ""
-                let country = placemarks.country ?? ""
-                
-                self.AdressLabel.text = "address: \(locality), \(administrativeArea), \(country),"
-            }
-        }
-        
-    }
-    
-    
-    @objc func datePickerValueChanged(sender: UIDatePicker){
+//         using the picker Date to determine the date waste pickup time
+        let datePicker = Date()
         let fromatter = DateFormatter()
         fromatter.dateFormat = "dd/MM/yyyy"
-        textFieldDate.text = fromatter.string(from: sender.date)
+        pickupDate.text = fromatter.string(from: datePicker)
+        pickupDate.textColor = .black
+        
+        
+        let datePickerView = UIDatePicker()
+        datePickerView.datePickerMode = .date
+        datePickerView.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: UIControl.Event.valueChanged)
+        datePickerView.frame.size = CGSize(width: 0, height: 250)
+        pickupDate.inputView = datePickerView
         
     }
-    
-    @IBAction func btnTypes(_ sender: UIButton) {
-        outletWasteTypes.forEach{ (btn) in
-            UIView.animate(withDuration: 0.7){
-                btn.isHidden = !btn.isHidden
-                btn.alpha = btn.alpha == 0 ? 1 : 0
-                btn.layoutIfNeeded()
-       }
-      }
+    @objc func datePickerValueChanged(sender: UIDatePicker)
+    {   let fromatter = DateFormatter()
+        fromatter.dateFormat = "dd/MM/yyyy"
+        pickupDate.text = fromatter.string(from: sender.date)
     }
     
-    @IBAction func wasteTypes(_ sender: UIButton) {
-        if let btnLbl = sender.titleLabel?.text {
-            print(btnLbl)
-   }
-  }
+    func saveData() {
+        //get userID
+        guard let uid = Auth.auth().currentUser?.uid else{ return }
+        
+        // create dictionary rep data to save
+        
+        Firestore.firestore().collection("UserRequest").addDocument(data: dictionary)
+        
+    }
+//       fnc for dissmising the keyboard
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
- }
+    
+    @IBAction func confirmRequest(_ sender: Any) {
+        let alert = UIAlertController(title: "Do You Want To Confirm Your Request?".localaized, message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes".localaized, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        saveData()
+    }
+}
+

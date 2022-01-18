@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct RequestCellContent {
+    
+    var typeWasteLbl: String
+    var dateLbl: String
+    var noteLbl : String
+   
+}

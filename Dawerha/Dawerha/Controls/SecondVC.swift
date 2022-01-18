@@ -8,7 +8,7 @@
 import UIKit
 
 class SecondVC: UIViewController {
-
+    
     @IBOutlet weak var imageSort: UIImageView!
     @IBOutlet weak var nameSort: UILabel!
     @IBOutlet weak var desSort: UILabel!

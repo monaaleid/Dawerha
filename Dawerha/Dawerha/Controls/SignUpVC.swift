@@ -12,7 +12,7 @@ import FirebaseFirestore
 import SwiftUI
 
 class SignUpVC: UIViewController {
-
+    
     @IBOutlet weak var nameTF: UITextField!
     @IBOutlet weak var newEmail: UITextField!
     @IBOutlet weak var phoneNumber: UITextField!
@@ -41,21 +41,21 @@ class SignUpVC: UIViewController {
         if newPassword.text?.isEmpty == true {
             print("No Text in Password Field")
             return
-       }
+        }
         
         signUp()
         
         
-       }
+    }
     
     
     @IBAction func signinBtn(_ sender: Any) {
     }
     
     
-     func signUp(){
-            Auth.auth().createUser(withEmail: newEmail.text!, password: newPassword.text!) { (authResult, error) in
-        guard let user = authResult? .user, error == nil else {
+    func signUp(){
+        Auth.auth().createUser(withEmail: newEmail.text!, password: newPassword.text!) { (authResult, error) in
+            guard let user = authResult? .user, error == nil else {
                 print("Error\(String(describing: error?.localizedDescription))")
                 return
             }
@@ -72,7 +72,7 @@ class SignUpVC: UIViewController {
         let tapGesture = UITapGestureRecognizer (target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
-  
+    
     @objc func hideKeyboard(){
         view.endEditing(false)
     }
